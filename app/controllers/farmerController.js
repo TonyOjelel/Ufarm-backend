@@ -1,160 +1,160 @@
-import productModel from '../models/productModel';
+import farmerModel from '../models/farmerModel';
 import connection from '../connection';
 // import cloudinary from '../cloudinary';
 
-class ProductController {  
+class FarmerController {  
   /**
-   * Create A product
+   * Create A Farmer
    * @param {object} req 
    * @param {object} res
-   * @returns {object} Return status code 201 and product object 
+   * @returns {object} Return status code 201 and Farmer object 
    */
-  static async addProduct(req, res) {
+  static async addFarmer(req, res) {
     try {
-      const product = await productModel.findOne({ name: req.body.name }).exec();
-      if(product) {
+      const Farmer = await farmerModel.findOne({ email: req.body.email }).exec();
+      if(Farmer) {
           return res.status(409).send(
             { 
               status: 409,
-              message: 'product with that Name already added',
+              message: 'Farmer with that email already exists',
             }
           );
       }
     //   const getImage = await cloudinary.uploads(req.body.image, 'Assets');
     //   req.body.image = getImage.url;
-      const data = new productModel(req.body);
+      const data = new farmerModel(req.body);
       await data.save();
       return res.status(201).send({
         status: 201,
-        message: 'product successfully added',
+        message: 'Farmer successfully registered',
         data
     });
     } catch(error) {
         return res.status(400).send(
           {
             status: 400,
-            message: 'Oops failed to add a product',
+            message: 'Oops failed to add a Farmer',
             error
         });
     }
   }
 
   /**
-   * Get All products
+   * Get All Farmers
    * @param {object} req 
    * @param {object} res 
-   * @returns {array} Return status code 200 and products array
+   * @returns {array} Return status code 200 and Farmers array
    */
-  static async getAllProducts(req, res) {
+  static async getAllFarmers(req, res) {
     try {
-      const data = await productModel.find({});
+      const data = await farmerModel.find({});
       return res.status(200).send(
         { 
           status: 200,
-          message: 'All available products',
+          message: 'All available Farmers',
           data
         });
     } catch(error) {
       return res.status(400).send(
         { 
           status: 400,
-          message: 'Oops failed to fetch products',
+          message: 'Oops failed to fetch Farmers',
           error
         });
     }
   }
 
   /**
-   * Get A Single product
+   * Get A Single Farmer
    * @param {object} req 
    * @param {object} res
-   * @returns {object} Return status code 200 and product object
+   * @returns {object} Return status code 200 and Farmer object
    */
-  static async getOneProduct(req, res) {
-    const data = await productModel.findById(req.params.id)
+  static async getOneFarmer(req, res) {
+    const data = await farmerModel.findById(req.params.id)
     try {     
       if(data == null) {
         return res.status(200).send(
           { 
             status: 200,
-            message: 'product with this Name doesn\'t exist',
+            message: 'Farmer with this Name doesn\'t exist',
           }
         );
     }
       return res.status(200).send(
         { 
           status: 200,
-          message: 'product Details',
+          message: 'Farmer Details',
           data
         }
 );
     } catch(error) {
       return res.status(400).send({ 
           status: 400,
-          message: 'Oops failed to fetch product',
+          message: 'Oops failed to fetch Farmer',
           error
     })
     }
   }
 
   /**
-   * Update A product
+   * Update A Farmer
    * @param {object} req 
    * @param {object} res 
-   * @returns {object} Return status code 200 and product object
+   * @returns {object} Return status code 200 and Farmer object
    */
-  static async updateProduct(req, res) {
+  static async updateFarmer(req, res) {
     try {
       const data = req.body;
-      await productModel.findOneAndUpdate({
+      await farmerModel.findOneAndUpdate({
           _id: req.params.id
         }, 
         data
       );
       return res.status(200).send({ 
         status: 200,
-        message: 'product updated successfully',
+        message: 'Farmer updated successfully',
         data 
     });
     } catch(error) {
       return res.status(400).send({ 
           status: 400,
-          message: 'Oops failed to update the product',
+          message: 'Oops failed to update the Farmer',
           error
         });
     }
   }
 
   /**
-   * Delete A product
+   * Delete A Farmer
    * @param {object} req 
    * @param {object} res 
    * @returns {void} return status code 200 and message 
    */
-  static async deleteProduct(req, res) {
+  static async deleteFarmer(req, res) {
     try {      
-      const product = await productModel.findById(req.params.id)
-      if(product == null) {
+      const Farmer = await farmerModel.findById(req.params.id)
+      if(Farmer == null) {
         return res.status(200).send(
           { 
             status: 200,
-            message: 'product with this Name doesn\'t exist',
+            message: 'Farmer with this Name doesn\'t exist',
           }
         );
     }
-      await productModel.deleteOne(product)
+      await farmerModel.deleteOne(Farmer)
       return res.status(200).send({ 
         status: 200,
-        message: 'product deleted successfully'
+        message: 'Farmer deleted successfully'
 });
     } catch(error) {
       return res.status(400).send({ 
           status: 400,
-          message: 'Oops failed to delete the product',
+          message: 'Oops failed to delete the Farmer',
           error
         });
     }
   }
 }
 
-export default ProductController;
+export default FarmerController;
