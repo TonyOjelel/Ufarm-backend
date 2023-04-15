@@ -1,5 +1,5 @@
 import express from 'express';
-// import BookController from '../controllers/bookController';
+import ProductController from '../controllers/productController';
 import AuthController from '../controllers/authController';
 // import { 
 //     Authenticate, 
@@ -13,11 +13,11 @@ const router = express.Router();
 router.post('/api/auth/signup', AuthController.signup);
 router.post('/api/auth/login', AuthController.login);
 
-// Books routes
-// router.post('/api/auth/book/', Authenticate, verifyAdmin, BookController.addBook);
-// router.get('/api/auth/books/', Authenticate, BookController.getAllBooks);
-// router.get('/api/auth/book/:id', Authenticate, BookController.getOneBook); 
-// router.put('/api/auth/book/:id', Authenticate, BookController.updateBook);
-// router.delete('/api/auth/book/:id', Authenticate, verifyAdmin, BookController.deleteBook);
+// Products routes
+router.post('/api/auth/product/', ProductController.addProduct);
+router.get('/api/auth/products/', ProductController.getAllProducts);
+router.get('/api/auth/product/:id', ProductController.getOneProduct); 
+router.put('/api/auth/product/:id', ProductController.updateProduct);
+router.delete('/api/auth/product/:id', ProductController.deleteProduct);
 
 export default router;
