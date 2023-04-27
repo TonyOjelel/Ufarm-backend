@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 const { PORT } = process.env;
 const corsOptions = {
-    origin: 'http://127.0.0.1:5500',
+    origin: 'http://127.0.0.1:5501',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 }
 
